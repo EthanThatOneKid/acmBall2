@@ -2,7 +2,7 @@
 
 <script>
 	import Tile from './Tile.svelte';
-	import { editor_text, game_view } from '../stores';
+	import { game_view } from '../stores';
 
 	// grid stuff
 	export let source_code = '';

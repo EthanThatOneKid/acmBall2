@@ -1,6 +1,6 @@
 <!-- DOM-less (sorta) component used by Graphical aid, Game -->
 <script>
-	import { editor_text } from '../stores';
+	import { editor_text } from '../stores/editor_text';
 	import Engine from './Engine.svelte';
 	import { onMount } from 'svelte';
 	import { engines } from './engines';

@@ -4,10 +4,10 @@
 	import { oneDark } from '@codemirror/theme-one-dark';
 	import { basicSetup } from 'codemirror';
 	import { defaultKeymap } from '@codemirror/commands';
-	import { linter, lintGutter } from '@codemirror/lint';
+	import { linter } from '@codemirror/lint';
 	import { esLint, javascript } from '@codemirror/lang-javascript';
 	import { onMount } from 'svelte';
-	import { editor_text, starting_text } from '../stores.js';
+	import { editor_text, starting_editor_text } from '../stores/editor_text';
 	import readOnlyRangesExtension from 'codemirror-readonly-ranges';
 	import { createEventDispatcher } from 'svelte';
 	import '../../node_modules/eslint-linter-browserify';
@@ -48,7 +48,7 @@
 	let editor_pane;
 
 	let editorState = EditorState.create({
-		doc: $starting_text,
+		doc: starting_editor_text,
 		extensions: [
 			keymap.of(defaultKeymap),
 			basicSetup,
@@ -61,6 +61,7 @@
 			}),
 			EditorView.lineWrapping,
 			readOnlyRangesExtension(getReadOnlyRanges),
+			// @ts-ignore
 			linter(esLint(new eslint.Linter(), lint_config)) // no idea why red squiggles
 		]
 	});
@@ -72,7 +73,7 @@
 
 	$: editor_text.set(text);
 
-	let text = $starting_text;
+	let text = starting_editor_text;
 	editor_text.subscribe((val) => {
 		text = val;
 	});
@@ -114,7 +115,7 @@
 	};
 
 	const resetCode = () => {
-		updateEditorText($starting_text);
+		updateEditorText(starting_editor_text);
 	};
 </script>
 

@@ -1,6 +1,6 @@
 <script>
 	import Game from './Game.svelte';
-	import { starting_text } from '../stores';
+	import { starting_editor_text } from '../stores/editor_text';
 
 	let n = 4;
 	$: idxs = Array.from(Array(n).keys());
@@ -30,7 +30,12 @@
 <div class="container">
 	<div class="grid">
 		{#each idxs as idx}
-			<Game bind:this={grids[idx]} source_code={$starting_text} id={idx} render_toolbar={false} />
+			<Game
+				bind:this={grids[idx]}
+				source_code={starting_editor_text}
+				id={idx}
+				render_toolbar={false}
+			/>
 		{/each}
 	</div>
 	<div class="toolbar">

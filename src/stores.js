@@ -1,6 +1,6 @@
-import { readable, writable } from 'svelte/store';
+import { readable, writable } from "svelte/store";
 
-export const game_view = writable('left');
+export const game_view = writable("left");
 
 // export const starting_text = readable(
 // 	`

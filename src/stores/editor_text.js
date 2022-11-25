@@ -1,36 +1,41 @@
-import { writable } from 'svelte/store';
+import { writable } from "svelte/store";
 
-import { DefaultClient } from 'generic-storage/esm/mod';
+import { DefaultClient } from "generic-storage/esm/mod";
 
-const client = new DefaultClient('http://localhost:8080');
+const client = new DefaultClient("http://localhost:8080", {
+  fetch: window.fetch.bind(window),
+});
 
-export const editor_text = persistable('');
+export const editor_text = persistable("");
 
-const STORAGE_KEY = { $key: 'id', id: 'editor_text' };
+const STORAGE_KEY = { $key: "id", id: "editor_text" };
 
 function persistable(defaultValue) {
-	const { subscribe, set: writableSet, update } = writable(defaultValue);
+  const { subscribe, set: writableSet, update } = writable(defaultValue);
 
-	function set(value) {
-		client.set({ ...value, ...STORAGE_KEY }).catch(console.error);
-		writableSet(value);
-	}
+  function set(value) {
+    client
+      .set({ ...value, ...STORAGE_KEY })
+      .then(console.info)
+      .catch(console.error);
+    writableSet(value);
+  }
 
-	async function init() {
-		writableSet(await client.get(STORAGE_KEY));
-		subscribe(set);
-	}
+  async function init() {
+    writableSet(await client.get(STORAGE_KEY.id));
+    subscribe(set);
+  }
 
-	return { subscribe, set, update, init };
+  return { subscribe, set, update, init };
 }
 
 export const starting_editor_text =
-	// "var boxB = Game.Bodies.rectangle(200, 200, 300, 300)\nfunction setup() { // runs once at start\n  console.log('hi')\n  Game.addObject(boxB)\n}\n\nfunction draw() { // runs every frame\n  console.log('drawing')\n}"
-	// 	`var ground = Game.Bodies.rectangle(Game.width / 2, Game.height, Game.width, 60, {isStatic: true, render: {
-	//     fillStyle: 'red', strokeStyle: 'blue', lineWidth: 3
-	//   }
-	// })
-	`var ground = Game.Bodies.rectangle(Game.width / 2, Game.height, Game.width, 60)
+  // "var boxB = Game.Bodies.rectangle(200, 200, 300, 300)\nfunction setup() { // runs once at start\n  console.log('hi')\n  Game.addObject(boxB)\n}\n\nfunction draw() { // runs every frame\n  console.log('drawing')\n}"
+  // 	`var ground = Game.Bodies.rectangle(Game.width / 2, Game.height, Game.width, 60, {isStatic: true, render: {
+  //     fillStyle: 'red', strokeStyle: 'blue', lineWidth: 3
+  //   }
+  // })
+  `var ground = Game.Bodies.rectangle(Game.width / 2, Game.height, Game.width, 60)
 Game.Body.setStatic(ground, true)
 ground.restitution = 0.9
 ground.render.fillStyle = 'green'

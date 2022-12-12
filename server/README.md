@@ -66,7 +66,7 @@ There are two ways of running the dev server locally:
 This is the recommended way of running the dev server locally.
 
 ```bash
-deno run --reload --allow-net server/default/main.ts -cors http://localhost:5174
+deno run --reload -A server/dev/main.ts -cors http://localhost:5173
 ```
 
 Note: New dev servers (e.g. TMS) are to be located in the `server` directory.
@@ -76,7 +76,7 @@ Note: New dev servers (e.g. TMS) are to be located in the `server` directory.
 For simplicity, feel free to run the default server.
 
 ```bash
-deno run --reload -A https://github.com/ethanthatonekid/generic-storage/raw/main/demos/default/main.ts
+deno run --reload -A https://github.com/ethanthatonekid/generic-storage/raw/main/demos/default/main.ts -cors http://localhost:5173
 ```
 
 ### Deno Deploy dev server

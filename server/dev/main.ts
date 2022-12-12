@@ -16,7 +16,7 @@ function main() {
   const port = Number(flags.port || flags.p) || 8080;
   const allowedOrigins =
     (typeof flags.cors === "string" ? String(flags.cors) : flags.cors && "*") ||
-    Deno.env.get("CORS") || "http://localhost:5174";
+    Deno.env.get("CORS") || "http://localhost:5173";
 
   serve({ port, allowedOrigins });
 }
